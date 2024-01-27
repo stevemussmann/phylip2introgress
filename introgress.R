@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/usr/local/bin/Rscript
 
 ## We assume that introgress and additional packages have been installed from CRAN
 
@@ -23,7 +23,7 @@ p1.data <- read.csv(file="p1data.csv", header=FALSE)
 p2.data <- read.csv(file="p2data.csv", header=FALSE)
 
 ## look at help page that describes the data set
-help(AdmixDataSim2)
+#help(AdmixDataSim2)
 
 ## code to convert genotype data into a matrix of allele counts,
 ## the results are saved to the list data object count.matrix
@@ -33,6 +33,12 @@ count.matrix <- prepare.data(admix.gen=gen.data.sim, loci.data=loci.data.sim, pa
 ## data.frame data object hi.index.sim1
 hi.index.sim <- est.h(introgress.data=count.matrix, loci.data=loci.data.sim)
 
+# calculate interspecific heterozygosity
+int.het <- calc.intersp.het(introgress.dat=count.matrix)
+
+#make Triangle Plot
+triangle.plot(hi.index=hi.index.sim, int.het=int.het, pdf=TRUE, out.file="tri_plot.pdf")
+
 ## make plot to visualize patterns of introgression
 ## this saves the plot to a pdf in the current directory for R
-mk.image(introgress.data=count.matrix, loci.data=loci.data.sim, hi.index=hi.index.sim, ylab.image="Individuals", xlab.h="population 2 ancestry", pdf=FALSE)
+mk.image(introgress.data=count.matrix, loci.data=loci.data.sim, hi.index=hi.index.sim, ylab.image="Individuals", xlab.h="population 2 ancestry", pdf=TRUE)
